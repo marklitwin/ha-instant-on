@@ -1,0 +1,13 @@
+.tools/
+__pycache__/
+*.py[cod]
+.venv/
+.env
+*.env
+.pytest_cache/
+.ruff_cache/
+.DS_Store
+# never commit credentials or raw API dumps
+creds*
+*_clientSummary.json
+*_inventory.json

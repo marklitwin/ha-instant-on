@@ -1,0 +1,19 @@
+name: Feature request
+description: Suggest a new entity, attribute or capability
+labels: [enhancement]
+body:
+  - type: textarea
+    id: want
+    attributes:
+      label: What would you like?
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: What would you use it for?
+  - type: textarea
+    id: api
+    attributes:
+      label: API details (if you know them)
+      description: Endpoint or field names, for example seen in the portal's browser dev tools. Redact personal data.

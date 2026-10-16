@@ -1,0 +1,45 @@
+name: Bug report
+description: Something isn't working
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Don't include passwords, tokens or unredacted client lists.**
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you expected, and what happened instead.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Integration version
+      placeholder: "0.1.0"
+    validations:
+      required: true
+  - type: input
+    id: ha
+    attributes:
+      label: Home Assistant version
+      placeholder: "2026.10.1"
+    validations:
+      required: true
+  - type: input
+    id: hardware
+    attributes:
+      label: Instant On hardware and firmware
+      placeholder: "AP-505 3.4.2, 1930 switch JL681A"
+  - type: textarea
+    id: logs
+    attributes:
+      label: Debug logs
+      description: With `custom_components.instant_on` set to debug.
+      render: text
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Diagnostics
+      description: Attach the downloaded diagnostics file (integration card → three-dot menu → Download diagnostics).

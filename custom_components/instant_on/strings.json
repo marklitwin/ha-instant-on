@@ -1,0 +1,77 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "HPE Instant On",
+        "description": "Use a dedicated Instant On account with MFA disabled and view-only access to your site(s).",
+        "data": {
+          "username": "Email",
+          "password": "Password"
+        }
+      },
+      "sites": {
+        "title": "Select sites",
+        "data": {
+          "sites": "Sites"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Re-authenticate",
+        "data": {
+          "password": "Password"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Login failed. Check credentials and make sure MFA is disabled on this account.",
+      "cannot_connect": "Could not reach the Instant On cloud.",
+      "no_sites": "This account has no sites. Invite it to a site first.",
+      "unknown": "Unexpected error."
+    },
+    "abort": {
+      "already_configured": "This account is already configured.",
+      "reauth_successful": "Re-authentication successful."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "scan_interval": "Polling interval (seconds)",
+          "track_clients": "Create device trackers for clients"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "clients": {
+        "name": "Clients"
+      },
+      "wireless_clients": {
+        "name": "Wireless clients"
+      },
+      "wired_clients": {
+        "name": "Wired clients"
+      },
+      "devices": {
+        "name": "Network devices"
+      },
+      "active_alerts": {
+        "name": "Active alerts"
+      },
+      "health_score": {
+        "name": "Health score"
+      },
+      "total_throughput": {
+        "name": "Total throughput"
+      },
+      "most_active_client": {
+        "name": "Most active client"
+      },
+      "busiest_client": {
+        "name": "Busiest client"
+      }
+    }
+  }
+}
