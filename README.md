@@ -1,8 +1,7 @@
 # HPE Instant On for Home Assistant
 
 [![HACS Custom](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://hacs.xyz/docs/faq/custom_repositories)
-[![Validate](https://github.com/marklitwin/ha-instant-on/actions/workflows/validate.yml/badge.svg)](https://github.com/marklitwin/ha-instant-on/actions/workflows/validate.yml)
-![Version](https://img.shields.io/badge/version-0.1.0-blue)
+![Version](https://img.shields.io/badge/version-0.2.0-blue)
 
 An **unofficial, read-only** Home Assistant integration for **HPE Aruba Networking Instant On** access points and switches.
 It polls the same cloud API the Instant On web portal uses, so you get presence detection for every client on your network, plus
