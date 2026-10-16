@@ -19,8 +19,21 @@ from .const import (
     CONF_TRACK_CLIENTS,
     DEFAULT_SCAN_INTERVAL,
     DOMAIN,
+    MAX_SCAN_INTERVAL,
     MIN_SCAN_INTERVAL,
 )
+
+
+def _interval_selector() -> selector.NumberSelector:
+    return selector.NumberSelector(
+        selector.NumberSelectorConfig(
+            min=MIN_SCAN_INTERVAL,
+            max=MAX_SCAN_INTERVAL,
+            step=15,
+            mode=selector.NumberSelectorMode.BOX,
+            unit_of_measurement="seconds",
+        )
+    )
 
 CREDS_SCHEMA = vol.Schema(
     {
@@ -74,12 +87,20 @@ class InstantOnConfigFlow(ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             return self.async_create_entry(
                 title=self._creds[CONF_USERNAME],
-                data={**self._creds, CONF_SITES: user_input[CONF_SITES]},
+                data={
+                    **self._creds,
+                    CONF_SITES: user_input[CONF_SITES],
+                    CONF_SCAN_INTERVAL: int(user_input[CONF_SCAN_INTERVAL]),
+                },
+                options={CONF_SCAN_INTERVAL: int(user_input[CONF_SCAN_INTERVAL])},
             )
         return self.async_show_form(
             step_id="sites",
             data_schema=vol.Schema(
-                {vol.Required(CONF_SITES, default=list(self._sites)): cv_multi(self._sites)}
+                {
+                    vol.Required(CONF_SITES, default=list(self._sites)): cv_multi(self._sites),
+                    vol.Required(CONF_SCAN_INTERVAL, default=DEFAULT_SCAN_INTERVAL): _interval_selector(),
+                }
             ),
         )
 
@@ -117,6 +138,10 @@ class InstantOnConfigFlow(ConfigFlow, domain=DOMAIN):
 class InstantOnOptionsFlow(OptionsFlow):
     async def async_step_init(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
         if user_input is not None:
+            user_input = {
+                **user_input,
+                CONF_SCAN_INTERVAL: int(user_input[CONF_SCAN_INTERVAL]),
+            }
             return self.async_create_entry(data=user_input)
         opts = self.config_entry.options
         return self.async_show_form(
@@ -125,8 +150,11 @@ class InstantOnOptionsFlow(OptionsFlow):
                 {
                     vol.Required(
                         CONF_SCAN_INTERVAL,
-                        default=opts.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL),
-                    ): vol.All(vol.Coerce(int), vol.Range(min=MIN_SCAN_INTERVAL, max=3600)),
+                        default=opts.get(
+                            CONF_SCAN_INTERVAL,
+                            self.config_entry.data.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL),
+                        ),
+                    ): _interval_selector(),
                     vol.Required(
                         CONF_TRACK_CLIENTS, default=opts.get(CONF_TRACK_CLIENTS, True)
                     ): bool,

@@ -12,7 +12,11 @@
       "sites": {
         "title": "Select sites",
         "data": {
-          "sites": "Sites"
+          "sites": "Sites",
+          "scan_interval": "Poll interval (seconds)"
+        },
+        "data_description": {
+          "scan_interval": "How often to refresh clients and device stats. 15 to 3600 seconds."
         }
       },
       "reauth_confirm": {
@@ -37,7 +41,7 @@
     "step": {
       "init": {
         "data": {
-          "scan_interval": "Polling interval (seconds)",
+          "scan_interval": "Poll interval (seconds)",
           "track_clients": "Create device trackers for clients"
         }
       }
@@ -71,6 +75,23 @@
       },
       "busiest_client": {
         "name": "Busiest client"
+      },
+      "client_download": {
+        "name": "Download"
+      },
+      "client_upload": {
+        "name": "Upload"
+      },
+      "client_signal": {
+        "name": "Signal strength"
+      },
+      "client_transferred": {
+        "name": "Data transferred"
+      }
+    },
+    "number": {
+      "poll_interval": {
+        "name": "Poll interval"
       }
     }
   }

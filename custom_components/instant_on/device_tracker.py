@@ -9,14 +9,15 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from . import InstantOnConfigEntry
 from .const import CONF_TRACK_CLIENTS, client_name, is_online, is_wireless
+from .entity import InstantOnEntity, client_device_info
 from .traffic import (
     client_bytes_last_24h,
     client_bytes_session,
     client_downstream_bps,
+    client_signal_dbm,
     client_total_bps,
     client_upstream_bps,
 )
-from .entity import InstantOnEntity
 
 _ATTRS = (
     "deviceName", "health", "signalQuality", "snrInDb", "wirelessBand",
@@ -57,6 +58,7 @@ class ClientTracker(InstantOnEntity, ScannerEntity):
         self._mac = mac
         self._attr_unique_id = f"client_{mac}"
         self._last: dict[str, Any] = self._client or {}
+        self._attr_device_info = client_device_info(site_id, mac, self._last)
 
     @property
     def _client(self) -> dict[str, Any] | None:
@@ -102,6 +104,8 @@ class ClientTracker(InstantOnEntity, ScannerEntity):
                 attrs["bytes_last_24h"] = b24
             if (sess := client_bytes_session(c)) is not None:
                 attrs["bytes_session"] = sess
+        if (signal := client_signal_dbm(c)) is not None:
+            attrs["signal_dbm"] = signal
         return attrs
 
     @callback

@@ -1,7 +1,7 @@
 # HPE Instant On for Home Assistant
 
 [![HACS Custom](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://hacs.xyz/docs/faq/custom_repositories)
-![Version](https://img.shields.io/badge/version-0.2.0-blue)
+![Version](https://img.shields.io/badge/version-0.3.0-blue)
 
 An **unofficial, read-only** Home Assistant integration for **HPE Aruba Networking Instant On** access points and switches.
 It polls the same cloud API the Instant On web portal uses, so you get presence detection for every client on your network, plus
@@ -83,7 +83,7 @@ Open **Configure** on the integration card to change:
 
 | Option | Default | Notes |
 |---|---|---|
-| Polling interval | 60 s | 30 to 3600 s. Lower values detect presence sooner and send more requests to HPE. |
+| Poll interval | 60 s | 15 to 3600 s. Also a **Poll interval** number entity on the site device. Lower values refresh stats sooner and send more requests to HPE. |
 | Create device trackers for clients | On | Turn off if you only want the site and device sensors. |
 
 ### Enable the trackers you care about
@@ -98,7 +98,8 @@ then click **Enable selected**.
 
 | Entity | State | Attributes |
 |---|---|---|
-| `sensor.<site>_clients` | Connected clients | |
+| `number.<site>_poll_interval` | Seconds between cloud polls | |
+| `sensor.<site>_clients` | Connected clients | `online_clients` (name, rates, signal, bytes) |
 | `sensor.<site>_wireless_clients` | Connected wireless clients | |
 | `sensor.<site>_wired_clients` | Connected wired clients | |
 | `sensor.<site>_network_devices` | APs and switches in inventory | |
@@ -116,7 +117,18 @@ then click **Enable selected**.
 
 The device registry entry includes the model, SKU, serial number, firmware version and MAC address.
 
-### Per client (disabled by default)
+### Per client
+
+Each client is a device under the site, with these sensors enabled:
+
+| Entity | State |
+|---|---|
+| `sensor.<client>_download` | Current download rate |
+| `sensor.<client>_upload` | Current upload rate |
+| `sensor.<client>_signal_strength` | Wireless signal, dBm |
+| `sensor.<client>_data_transferred` | Bytes moved (24 h total when the API sends it, otherwise the session total) |
+
+Device trackers are still created disabled. Enable the ones you want for presence.
 
 | Entity | State | Attributes |
 |---|---|---|

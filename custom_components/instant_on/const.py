@@ -9,7 +9,8 @@ CONF_SITES = "sites"
 CONF_TRACK_CLIENTS = "track_clients"
 CONF_SCAN_INTERVAL = "scan_interval"
 DEFAULT_SCAN_INTERVAL = 60  # be polite to an unofficial cloud API
-MIN_SCAN_INTERVAL = 30
+MIN_SCAN_INTERVAL = 15
+MAX_SCAN_INTERVAL = 3600
 
 
 def client_mac(client: dict) -> str | None:

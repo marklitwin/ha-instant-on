@@ -6,7 +6,7 @@ from typing import Any
 from homeassistant.helpers.device_registry import CONNECTION_NETWORK_MAC, DeviceInfo
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DOMAIN
+from .const import DOMAIN, client_name
 from .coordinator import InstantOnCoordinator, SiteData
 
 
@@ -36,6 +36,15 @@ def inventory_device_info(site_id: str, dev: dict[str, Any]) -> DeviceInfo:
         model_id=dev.get("sku"),
         serial_number=dev.get("serialNumber"),
         sw_version=dev.get("currentFirmwareVersion") or dev.get("deviceSoftwareVersion"),
+        via_device=(DOMAIN, f"site_{site_id}"),
+    )
+
+
+def client_device_info(site_id: str, mac: str, client: dict[str, Any]) -> DeviceInfo:
+    return DeviceInfo(
+        identifiers={(DOMAIN, f"client_{mac}")},
+        connections={(CONNECTION_NETWORK_MAC, mac)},
+        name=client_name(client) or mac,
         via_device=(DOMAIN, f"site_{site_id}"),
     )
 

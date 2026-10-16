@@ -9,7 +9,7 @@ from homeassistant.helpers.aiohttp_client import async_create_clientsession
 from .api import InstantOnClient
 from .coordinator import InstantOnCoordinator
 
-PLATFORMS = [Platform.BINARY_SENSOR, Platform.DEVICE_TRACKER, Platform.SENSOR]
+PLATFORMS = [Platform.BINARY_SENSOR, Platform.DEVICE_TRACKER, Platform.NUMBER, Platform.SENSOR]
 
 type InstantOnConfigEntry = ConfigEntry[InstantOnCoordinator]
 

@@ -5,6 +5,13 @@ and versions follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-10-16
+
+### Added
+- **Poll interval** number on each site device, and the same field during setup and in Configure. Range is 15 to 3600 seconds.
+- Per-client **Download**, **Upload**, **Signal strength**, and **Data transferred** sensors. Each client is its own device under the site.
+- The site **Clients** sensor lists online clients and their current rates in `online_clients`.
+
 ## [0.2.0] - 2026-10-16
 
 ### Added
